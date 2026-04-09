@@ -31,3 +31,39 @@ body {
   color: var(--color-text-primary);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.light body {
+  background-color: var(--color-light-base);
+  color: var(--color-text-light-primary);
+}
+
+.light .bg-navy-base {
+  background-color: var(--color-light-base) !important;
+}
+.light .bg-navy-surface {
+  background-color: var(--color-light-surface) !important;
+}
+.light .bg-navy-elevated {
+  background-color: var(--color-light-elevated) !important;
+}
+.light .border-navy-border {
+  border-color: var(--color-light-border) !important;
+}
+.light .text-text-primary {
+  color: var(--color-text-light-primary) !important;
+}
+.light .text-text-secondary {
+  color: var(--color-text-light-secondary) !important;
+}
+.light .text-text-muted {
+  color: var(--color-text-light-muted) !important;
+}
+.light .text-amber-accent {
+  color: var(--color-amber-light-accent) !important;
+}
+.light .bg-amber-accent {
+  background-color: var(--color-amber-light-accent) !important;
+}
+.light .hover\:bg-amber-hover:hover {
+  background-color: var(--color-amber-light-hover) !important;
+}
