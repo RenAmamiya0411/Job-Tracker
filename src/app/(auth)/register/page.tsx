@@ -38,41 +38,41 @@ export default function RegisterPage() {
     router.push("/login");
   }
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="w-full max-w-md bg-white rounded-xl shadow p-8">
-        <h1 className="text-2xl font-semibold text-gray-900 mb-6">Create account</h1>
+    <div className="min-h-screen flex items-center justify-center bg-navy-base">
+      <div className="w-full max-w-md bg-navy-surface rounded-xl shadow p-8">
+        <h1 className="text-2xl font-semibold text-text-primary mb-6">Create account</h1>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+            <label className="block text-sm font-medium text-text-secondary mb-1">Name</label>
             <input
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-navy-border text-text-primary rounded-lg px-3 py-2 text-sm outline-none  focus:border-amber-accent bg-navy-elevated"
               type="text"
               name="name"
               required
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <label className="block text-sm font-medium text-text-secondary mb-1">Email</label>
             <input
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-navy-border text-text-primary rounded-lg px-3 py-2 text-sm outline-none  focus:border-amber-accent bg-navy-elevated"
               type="email"
               name="email"
               required
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+            <label className="block text-sm font-medium text-text-secondary mb-1">Password</label>
             <input
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-navy-border text-text-primary rounded-lg px-3 py-2 text-sm outline-none  focus:border-amber-accent bg-navy-elevated"
               type="password"
               name="password"
               required
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+            <label className="block text-sm font-medium text-text-secondary mb-1">Confirm Password</label>
             <input
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-navy-border text-text-primary rounded-lg px-3 py-2 text-sm outline-none  focus:border-amber-accent bg-navy-elevated"
               type="password"
               name="confirm"
               required
@@ -84,15 +84,15 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors"
+            className="w-full bg-amber-accent text-navy-base py-2 rounded-lg text-sm font-medium hover:bg-amber-hover disabled:opacity-50 transition-colors"
           >
             {loading ? "Creating account..." : "Create account"}
           </button>
         </form>
 
-        <p className="text-sm text-gray-500 mt-6 text-center">
+        <p className="text-sm text-text-secondary mt-6 text-center">
           Already have an account?{" "}
-          <Link className="text-blue-600 hover:underline" href="/login">
+          <Link className="text-amber-accent hover:underline" href="/login">
             Sign in
           </Link>
         </p>
