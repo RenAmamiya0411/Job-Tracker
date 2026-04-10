@@ -1,23 +1,25 @@
 "use client";
 
-import { createJob } from "@/actions/jobs";
+import { updateJobDetails } from "@/actions/jobs";
 import { useState } from "react";
+import { Job } from "@prisma/client";
 import { createPortal } from "react-dom";
 
 const statusOptions = ["SAVED", "APPLIED", "INTERVIEW", "OFFER", "REJECTED"];
 
 interface Props {
+  job: Job;
   onClose: () => void;
 }
 
-export default function AddJobModal({ onClose }: Props) {
+export default function EditJobModal({ job, onClose }: Props) {
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.currentTarget);
-    await createJob(formData);
+    await updateJobDetails(job.id, formData);
     setLoading(false);
     onClose();
   }
@@ -26,13 +28,13 @@ export default function AddJobModal({ onClose }: Props) {
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
       <div className="bg-navy-surface border border-navy-border rounded-xl p-6 w-full max-w-md mx-4">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-semibold text-text-primary">Add job</h2>
+          <h2 className="text-lg font-semibold text-text-primary">Edit job</h2>
           <button className="text-text-muted hover:text-text-primary transition-colors" type="button" onClick={onClose}>
             ✕
           </button>
         </div>
 
-        <form className="space-y-4" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <div>
             <label className="block text-sm font-medium text-text-secondary mb-1">
               Company <span className="text-red-400">*</span>
@@ -41,6 +43,7 @@ export default function AddJobModal({ onClose }: Props) {
               className="w-full bg-navy-elevated border border-navy-border rounded-lg px-3 py-2 text-sm text-text-primary outline-none focus:border-amber-accent transition-colors"
               name="company"
               type="text"
+              defaultValue={job.company}
               required
             />
           </div>
@@ -52,6 +55,7 @@ export default function AddJobModal({ onClose }: Props) {
               className="w-full bg-navy-elevated border border-navy-border rounded-lg px-3 py-2 text-sm text-text-primary outline-none focus:border-amber-accent transition-colors"
               name="position"
               type="text"
+              defaultValue={job.position}
               required
             />
           </div>
@@ -60,7 +64,7 @@ export default function AddJobModal({ onClose }: Props) {
             <select
               className="w-full bg-navy-elevated border border-navy-border rounded-lg px-3 py-2 text-sm text-text-primary outline-none focus:border-amber-accent transition-colors"
               name="status"
-              defaultValue="APPLIED"
+              defaultValue={job.status}
             >
               {statusOptions.map(s => (
                 <option key={s} value={s}>
@@ -75,6 +79,7 @@ export default function AddJobModal({ onClose }: Props) {
               className="w-full bg-navy-elevated border border-navy-border rounded-lg px-3 py-2 text-sm text-text-primary outline-none focus:border-amber-accent transition-colors"
               name="location"
               type="text"
+              defaultValue={job.location ?? ""}
               placeholder="Remote, Manila, etc."
             />
           </div>
@@ -85,6 +90,7 @@ export default function AddJobModal({ onClose }: Props) {
               name="salary"
               type="text"
               placeholder="₱50,000 / month"
+              defaultValue={job.salary ?? ""}
             />
           </div>
           <div>
@@ -93,6 +99,7 @@ export default function AddJobModal({ onClose }: Props) {
               className="w-full bg-navy-elevated border border-navy-border rounded-lg px-3 py-2 text-sm text-text-primary outline-none focus:border-amber-accent transition-colors"
               name="url"
               type="url"
+              defaultValue={job.url ?? ""}
               placeholder="https://..."
             />
           </div>
@@ -102,6 +109,7 @@ export default function AddJobModal({ onClose }: Props) {
               className="w-full bg-navy-elevated border border-navy-border rounded-lg px-3 py-2 text-sm text-text-primary outline-none focus:border-amber-accent transition-colors resize-none"
               name="notes"
               rows={3}
+              defaultValue={job.notes ?? ""}
               placeholder="Any notes about this application..."
             />
           </div>
@@ -118,7 +126,7 @@ export default function AddJobModal({ onClose }: Props) {
               type="submit"
               disabled={loading}
             >
-              {loading ? "Adding..." : "Add job"}
+              {loading ? "Saving..." : "Save changes"}
             </button>
           </div>
         </form>

@@ -5,6 +5,7 @@ import { useState } from "react";
 import AddJobModal from "./AddJobModal";
 import { Job } from "@prisma/client";
 import ConfirmModal from "./ConfirmModal";
+import EditJobModal from "./EditJobModal";
 
 const statusColors: Record<string, string> = {
   SAVED: "bg-blue-950 text-blue-400",
@@ -23,6 +24,7 @@ interface Props {
 export default function JobsClient({ jobs }: Props) {
   const [showModal, setShowModal] = useState(false);
   const [confirmId, setConfirmId] = useState<string | null>(null);
+  const [editJob, setEditJob] = useState<Job | null>(null);
 
   async function handleDelete() {
     if (!confirmId) return;
@@ -89,6 +91,12 @@ export default function JobsClient({ jobs }: Props) {
                   ))}
                 </select>
                 <button
+                  className="text-text-muted hover:text-text-primary transition-colors text-xs px-2"
+                  onClick={() => setEditJob(job)}
+                >
+                  Edit
+                </button>
+                <button
                   className="text-text-muted hover:text-red-400 transition-colors text-sm px-2"
                   onClick={() => setConfirmId(job.id)}
                 >
@@ -100,6 +108,7 @@ export default function JobsClient({ jobs }: Props) {
         </div>
       )}
       {showModal && <AddJobModal onClose={() => setShowModal(false)} />}
+      {editJob && <EditJobModal job={editJob} onClose={() => setEditJob(null)} />}
       {confirmId && (
         <ConfirmModal
           message="This will permanently delete this job application."

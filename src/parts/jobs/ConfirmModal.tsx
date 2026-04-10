@@ -1,5 +1,7 @@
 "use client";
 
+import { createPortal } from "react-dom";
+
 interface Props {
   message: string;
   onConfirm: () => void;
@@ -7,7 +9,7 @@ interface Props {
 }
 
 export default function ConfirmModal({ message, onConfirm, onCancel }: Props) {
-  return (
+  const modal = (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
       <div className="bg-navy-surface border border-navy-border rounded-xl p-6 w-full max-w-sm mx-4">
         <h2 className="text-base font-semibold text-text-primary mb-2">Are you sure?</h2>
@@ -32,4 +34,6 @@ export default function ConfirmModal({ message, onConfirm, onCancel }: Props) {
       </div>
     </div>
   );
+
+  return createPortal(modal, document.body);
 }
