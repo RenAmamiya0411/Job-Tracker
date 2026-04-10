@@ -16,6 +16,7 @@ const statusColors: Record<string, string> = {
 };
 
 const statusOptions = ["SAVED", "APPLIED", "INTERVIEW", "OFFER", "REJECTED"];
+const filteredOptions = ["ALL", ...statusOptions];
 
 interface Props {
   jobs: Job[];
@@ -25,6 +26,9 @@ export default function JobsClient({ jobs }: Props) {
   const [showModal, setShowModal] = useState(false);
   const [confirmId, setConfirmId] = useState<string | null>(null);
   const [editJob, setEditJob] = useState<Job | null>(null);
+  const [filter, setFilter] = useState("ALL");
+
+  const filtered = filter === "ALL" ? jobs : jobs.filter(j => j.status === filter);
 
   async function handleDelete() {
     if (!confirmId) return;
@@ -38,7 +42,7 @@ export default function JobsClient({ jobs }: Props) {
         <div>
           <h1 className="text-2xl font-semibold text-text-primary">Jobs</h1>
           <p className="text-text-secondary text-sm mt-1">
-            {jobs.length} application{jobs.length !== 1 ? "s" : ""}
+            {filtered.length} application{filtered.length !== 1 ? "s" : ""}
           </p>
         </div>
 
@@ -50,16 +54,36 @@ export default function JobsClient({ jobs }: Props) {
         </button>
       </div>
 
-      {jobs.length === 0 ? (
-        <div className="text-center py-20">
-          <p className="text-text-muted text-sm">No applications yet.</p>
-          <button className="mt-4 text-amber-accent hover:underline text-sm" onClick={() => setShowModal(true)}>
-            Add your first job
+      <div className="flex gap-2 mb-6 flex-wrap">
+        {filteredOptions.map(f => (
+          <button
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+              filter === f
+                ? "bg-amber-accent text-navy-base"
+                : "bg-navy-elevated border border-navy-border text-text-secondary hover:text-text-primary"
+            }`}
+            key={f}
+            onClick={() => setFilter(f)}
+          >
+            {f === "ALL" ? "All" : f.charAt(0) + f.slice(1).toLowerCase()}
           </button>
+        ))}
+      </div>
+
+      {filtered.length === 0 ? (
+        <div className="text-center py-20">
+          <p className="text-text-muted text-sm">
+            {filter === "ALL" ? "No applications yet." : `No ${filter.toLowerCase()} applications`}
+          </p>
+          {filter === "ALL" && (
+            <button className="mt-4 text-amber-accent hover:underline text-sm" onClick={() => setShowModal(true)}>
+              Add your first job
+            </button>
+          )}
         </div>
       ) : (
         <div className="space-y-3">
-          {jobs.map(job => (
+          {filtered.map(job => (
             <div
               className="bg-navy-surface border border-navy-border rounded-xl p-5 flex items-start justify-between gap-4"
               key={job.id}
