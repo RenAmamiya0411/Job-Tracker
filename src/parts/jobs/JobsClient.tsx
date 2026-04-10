@@ -85,7 +85,7 @@ export default function JobsClient({ jobs }: Props) {
         <div className="space-y-3">
           {filtered.map(job => (
             <div
-              className="bg-navy-surface border border-navy-border rounded-xl p-5 flex items-start justify-between gap-4"
+              className="bg-navy-surface border border-navy-border rounded-xl p-5 flex flex-col sm:flex-row sm:items-start justify-between gap-4"
               key={job.id}
             >
               <div className="flex-1 min-w-0">
@@ -102,9 +102,9 @@ export default function JobsClient({ jobs }: Props) {
                   <span>{new Date(job.appliedAt).toLocaleDateString()}</span>
                 </div>
               </div>
-              <div className="flex items-center gap-2 shrink-0">
+              <div className="flex items-center gap-2 sm:shrink-0">
                 <select
-                  className="bg-navy-elevated border border-navy-border rounded-lg px-2 py-1 text-xs text-text-secondary outline-none focus:border-amber-accent transition-colors"
+                  className="bg-navy-elevated border border-navy-border rounded-lg px-2 py-1 text-xs text-text-secondary outline-none focus:border-amber-accent transition-colors flex-1 sm:flex-none"
                   defaultValue={job.status}
                   onChange={e => updateJob(job.id, e.target.value)}
                 >
