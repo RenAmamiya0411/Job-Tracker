@@ -3,6 +3,7 @@
 import { createJob } from "@/actions/jobs";
 import { useState } from "react";
 import { createPortal } from "react-dom";
+import { toast } from "sonner";
 
 const statusOptions = ["SAVED", "APPLIED", "INTERVIEW", "OFFER", "REJECTED"];
 
@@ -18,6 +19,7 @@ export default function AddJobModal({ onClose }: Props) {
     setLoading(true);
     const formData = new FormData(e.currentTarget);
     await createJob(formData);
+    toast.success("Job added successfully");
     setLoading(false);
     onClose();
   }

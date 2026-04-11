@@ -6,6 +6,8 @@ import AddJobModal from "./AddJobModal";
 import { Job } from "@prisma/client";
 import ConfirmModal from "./ConfirmModal";
 import EditJobModal from "./EditJobModal";
+import { toast } from "sonner";
+import Link from "next/link";
 
 const statusColors: Record<string, string> = {
   SAVED: "bg-blue-950 text-blue-400",
@@ -33,6 +35,7 @@ export default function JobsClient({ jobs }: Props) {
   async function handleDelete() {
     if (!confirmId) return;
     await deleteJob(confirmId);
+    toast.success("Job deleted successfully");
     setConfirmId(null);
   }
 
@@ -90,7 +93,9 @@ export default function JobsClient({ jobs }: Props) {
             >
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-3 mb-1">
-                  <h3 className="font-medium text-text-primary truncate">{job.position}</h3>
+                  <Link href={`/jobs/${job.id}`}>
+                    <h3 className="font-medium text-text-primary truncate">{job.position}</h3>
+                  </Link>
                   <span className={`text-xs px-2 py-0.5 rounded-full font-medium shrink-0 ${statusColors[job.status]}`}>
                     {job.status.charAt(0) + job.status.slice(1).toLowerCase()}
                   </span>
@@ -106,7 +111,10 @@ export default function JobsClient({ jobs }: Props) {
                 <select
                   className="bg-navy-elevated border border-navy-border rounded-lg px-2 py-1 text-xs text-text-secondary outline-none focus:border-amber-accent transition-colors flex-1 sm:flex-none"
                   defaultValue={job.status}
-                  onChange={e => updateJob(job.id, e.target.value)}
+                  onChange={async e => {
+                    await updateJob(job.id, e.target.value);
+                    toast.success("Status updated");
+                  }}
                 >
                   {statusOptions.map(s => (
                     <option key={s} value={s}>

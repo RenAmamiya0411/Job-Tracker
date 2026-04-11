@@ -4,6 +4,7 @@ import { updateJobDetails } from "@/actions/jobs";
 import { useState } from "react";
 import { Job } from "@prisma/client";
 import { createPortal } from "react-dom";
+import { toast } from "sonner";
 
 const statusOptions = ["SAVED", "APPLIED", "INTERVIEW", "OFFER", "REJECTED"];
 
@@ -20,6 +21,7 @@ export default function EditJobModal({ job, onClose }: Props) {
     setLoading(true);
     const formData = new FormData(e.currentTarget);
     await updateJobDetails(job.id, formData);
+    toast.success("Job updated successfully");
     setLoading(false);
     onClose();
   }
