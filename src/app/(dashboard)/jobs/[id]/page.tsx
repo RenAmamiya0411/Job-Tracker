@@ -1,5 +1,6 @@
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import AITools from "@/parts/jobs/AITools";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -84,10 +85,7 @@ export default async function JobDetailPage({ params }: Props) {
         )}
       </div>
 
-      <div className="bg-navy-surface border border-navy-border rounded-xl p-6">
-        <h2 className="text-lg font-semibold text-text-primary mb-1">AI Tools</h2>
-        <p className="text-text-muted text-sm">Coming Soon --- cover letter, resume tips, and interview prep.</p>
-      </div>
+      <AITools job={job} userName={session!.user.name!} />
     </div>
   );
 }
