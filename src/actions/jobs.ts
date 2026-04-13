@@ -5,6 +5,12 @@ import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 
+async function logActivity(jobId: string, type: string, message: string) {
+  await prisma.activity.create({
+    data: { jobId, type, message }
+  });
+}
+
 export async function createJob(formData: FormData) {
   const session = await getServerSession(authOptions);
   if (!session) throw new Error("Unauthorized");
@@ -17,7 +23,7 @@ export async function createJob(formData: FormData) {
   const url = formData.get("url") as string;
   const notes = formData.get("notes") as string;
 
-  await prisma.job.create({
+  const job = await prisma.job.create({
     data: {
       company,
       position,
@@ -29,6 +35,8 @@ export async function createJob(formData: FormData) {
       userId: session.user.id
     }
   });
+
+  await logActivity(job.id, "created", `Application created with status ${status.toLowerCase()}`);
 
   revalidatePath("/jobs");
   revalidatePath("/dashboard");
@@ -54,6 +62,8 @@ export async function updateJob(id: string, status: string) {
     where: { id, userId: session.user.id },
     data: { status: status as any }
   });
+
+  await logActivity(id, "status", `Status changed to ${status.toLowerCase()}`);
 
   revalidatePath("/jobs");
   revalidatePath("/dashboard");
@@ -83,6 +93,8 @@ export async function updateJobDetails(id: string, formData: FormData) {
       notes: notes || null
     }
   });
+
+  await logActivity(id, "updated", `Application details updated`);
 
   revalidatePath("/jobs");
   revalidatePath("/dashboard");

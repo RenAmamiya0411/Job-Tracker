@@ -35,6 +35,7 @@ model Job {
   notes String?
   appliedAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  activities Activity[]
 
   userId String
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -46,4 +47,13 @@ enum Status {
   OFFER
   REJECTED
   SAVED
+}
+
+model Activity {
+  id String @id @default(cuid())
+  jobId String
+  job Job @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  type String
+  message String
+  createdAt DateTime @default(now())
 }

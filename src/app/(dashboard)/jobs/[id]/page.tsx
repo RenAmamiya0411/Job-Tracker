@@ -1,5 +1,6 @@
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import ActivityTimeline from "@/parts/jobs/ActivityTimeline";
 import AITools from "@/parts/jobs/AITools";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
@@ -20,9 +21,15 @@ const statusColors: Record<string, string> = {
 export default async function JobDetailPage({ params }: Props) {
   const session = await getServerSession(authOptions);
 
-  const job = await prisma.job.findUnique({
-    where: { id: params.id, userId: session!.user.id }
-  });
+  const [job, activities] = await Promise.all([
+    prisma.job.findUnique({
+      where: { id: params.id, userId: session!.user.id }
+    }),
+    prisma.activity.findMany({
+      where: { jobId: params.id },
+      orderBy: { createdAt: "desc" }
+    })
+  ]);
 
   if (!job) notFound();
 
@@ -86,6 +93,7 @@ export default async function JobDetailPage({ params }: Props) {
       </div>
 
       <AITools job={job} userName={session!.user.name!} />
+      <ActivityTimeline activities={activities} />
     </div>
   );
 }
