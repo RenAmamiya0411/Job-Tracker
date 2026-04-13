@@ -1,5 +1,6 @@
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import DashboardChart from "@/parts/DashboardChart";
 import DashboardSkeleton from "@/parts/DashboardSkeleton";
 import { getServerSession } from "next-auth";
 import { Suspense } from "react";
@@ -25,6 +26,14 @@ async function DashboardContent() {
     { label: "Saved", value: saved }
   ];
 
+  const chartData = [
+    { label: "Saved", value: saved, color: "#3b82f6" },
+    { label: "Applied", value: applied, color: "#7a8a9e" },
+    { label: "Interview", value: interview, color: "#4ade80" },
+    { label: "Offer", value: offer, color: "#f59e0b" },
+    { label: "Rejected", value: rejected, color: "#f87171" }
+  ];
+
   return (
     <div>
       <div className="mb-8">
@@ -40,6 +49,7 @@ async function DashboardContent() {
           </div>
         ))}
       </div>
+      <DashboardChart data={chartData} />
     </div>
   );
 }
