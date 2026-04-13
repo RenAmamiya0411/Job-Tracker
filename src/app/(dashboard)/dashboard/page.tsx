@@ -1,8 +1,10 @@
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import DashboardSkeleton from "@/parts/DashboardSkeleton";
 import { getServerSession } from "next-auth";
+import { Suspense } from "react";
 
-export default async function DashboardPage() {
+async function DashboardContent() {
   const session = await getServerSession(authOptions);
 
   const [total, applied, interview, offer, rejected, saved] = await Promise.all([
@@ -39,5 +41,13 @@ export default async function DashboardPage() {
         ))}
       </div>
     </div>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={<DashboardSkeleton />}>
+      <DashboardContent />
+    </Suspense>
   );
 }
