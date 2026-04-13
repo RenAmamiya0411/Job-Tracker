@@ -19,29 +19,31 @@ A full-stack job application tracker built to help developers manage their job s
 
 ## Tech Stack
 
-| Technology | Purpose |
-|---|---|
-| Next.js 14 | Full-stack framework with App Router and server actions |
-| TypeScript | Type safety across frontend and backend |
-| Tailwind CSS v4 | Utility-first styling |
-| Prisma | Type-safe ORM |
-| PostgreSQL (Neon) | Serverless database |
-| NextAuth.js | Authentication with JWT sessions |
-| Groq (LLaMA 3.3) | AI features — cover letter, resume, interview prep |
-| Recharts | Application breakdown chart |
-| Sonner | Toast notifications |
-| next-themes | Dark/light mode toggle |
+| Technology        | Purpose                                                 |
+| ----------------- | ------------------------------------------------------- |
+| Next.js 14        | Full-stack framework with App Router and server actions |
+| TypeScript        | Type safety across frontend and backend                 |
+| Tailwind CSS v4   | Utility-first styling                                   |
+| Prisma            | Type-safe ORM                                           |
+| PostgreSQL (Neon) | Serverless database                                     |
+| NextAuth.js       | Authentication with JWT sessions                        |
+| Groq (LLaMA 3.3)  | AI features — cover letter, resume, interview prep      |
+| Recharts          | Application breakdown chart                             |
+| Sonner            | Toast notifications                                     |
+| next-themes       | Dark/light mode toggle                                  |
 
 ---
 
 ## Features
 
 ### Core
+
 - JWT authentication — register, login, logout
 - Demo account for instant access
 - Protected routes with server-side session checks
 
 ### Job Management
+
 - Add, edit, and delete job applications
 - Track status — Saved, Applied, Interview, Offer, Rejected
 - Filter by status with live counts
@@ -50,16 +52,19 @@ A full-stack job application tracker built to help developers manage their job s
 - Activity timeline per job — tracks status changes and updates
 
 ### Dashboard
+
 - Stats overview — total, applied, interviews, offers, rejected, saved
 - Application breakdown bar chart
 - Skeleton loading state
 
 ### AI Tools (powered by Groq / LLaMA 3.3)
+
 - **Cover letter generator** — paste a job description, get a tailored cover letter
 - **Resume bullet improver** — paste your bullets, get impactful rewrites
 - **Interview prep** — get 5 common questions with STAR method answer frameworks
 
 ### UX
+
 - Dark and light mode with toggle
 - Toast notifications for all actions
 - Confirm modal before destructive actions
@@ -70,6 +75,7 @@ A full-stack job application tracker built to help developers manage their job s
 ## Local Setup
 
 ### Prerequisites
+
 - Node.js 18+
 - PostgreSQL database (or [Neon](https://neon.tech) free tier)
 - [Groq](https://console.groq.com) API key (free)
@@ -114,6 +120,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Project Structure
 
+```
 src/
 ├── app/
 │   ├── (auth)/          # Login and register pages
@@ -124,6 +131,7 @@ src/
 ├── actions/             # Server actions — jobs, auth, AI
 ├── lib/                 # Prisma client, NextAuth config, Groq client
 └── types/               # TypeScript type declarations
+```
 
 ---
 
