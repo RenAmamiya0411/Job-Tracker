@@ -38,7 +38,7 @@ async function DashboardContent() {
     <div>
       <div className="mb-8">
         <h1 className="text-2xl font-semibold text-text-primary">Welcome back, {session!.user.name}</h1>
-        <p className="text-text-secondary mt-1 text-sm">Here's a summary of your job search</p>
+        <p className="text-text-secondary mt-1 text-sm">Here&apos;s a summary of your job search</p>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
