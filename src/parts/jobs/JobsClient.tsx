@@ -29,8 +29,25 @@ export default function JobsClient({ jobs }: Props) {
   const [confirmId, setConfirmId] = useState<string | null>(null);
   const [editJob, setEditJob] = useState<Job | null>(null);
   const [filter, setFilter] = useState("ALL");
+  const [search, setSearch] = useState("");
+  const [sort, setSort] = useState("newest");
 
-  const filtered = filter === "ALL" ? jobs : jobs.filter(j => j.status === filter);
+  const filtered = jobs
+    .filter(j => {
+      const matchesFilter = filter === "ALL" || j.status === filter;
+      const matchesSearch =
+        search === "" ||
+        j.position.toLowerCase().includes(search.toLowerCase()) ||
+        j.company.toLowerCase().includes(search.toLowerCase());
+      return matchesFilter && matchesSearch;
+    })
+    .sort((a, b) => {
+      if (sort === "newest") return new Date(b.appliedAt).getTime() - new Date(a.appliedAt).getTime();
+      if (sort === "oldest") return new Date(a.appliedAt).getTime() - new Date(b.appliedAt).getTime();
+      if (sort === "company") return a.company.localeCompare(b.company);
+      if (sort === "position") return a.position.localeCompare(b.position);
+      return 0;
+    });
 
   async function handleDelete() {
     if (!confirmId) return;
@@ -55,6 +72,26 @@ export default function JobsClient({ jobs }: Props) {
         >
           + Add Job
         </button>
+      </div>
+
+      <div className="flex gap-3 mb-4 flex-col sm:flex-row">
+        <input
+          className="flex-1 bg-navy-elevated border border-navy-border rounded-lg px-3 py-2 text-sm text-text-primary outline-none focus:border-amber-accent transition-colors placeholder:text-text-muted"
+          type="text"
+          placeholder="Search by position or company..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+        />
+        <select
+          className="bg-navy-elevated border border-navy-border rounded-lg px-3 py-2 text-sm text-text-secondary outline-none focus:border-amber-accent transition-colors"
+          value={sort}
+          onChange={e => setSort(e.target.value)}
+        >
+          <option value="newest">Newest first</option>
+          <option value="oldest">Oldest first</option>
+          <option value="company">Company A-Z</option>
+          <option value="position">Position A-Z</option>
+        </select>
       </div>
 
       <div className="flex gap-2 mb-6 flex-wrap">

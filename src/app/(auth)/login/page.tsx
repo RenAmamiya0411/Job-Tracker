@@ -28,6 +28,25 @@ export default function LoginPage() {
       setLoading(false);
       return;
     }
+    router.push("/dashboard");
+    router.refresh();
+  }
+
+  async function handleDemo() {
+    setLoading(true);
+    setError("");
+
+    const result = await signIn("credentials", {
+      email: "DemoUser@gmail.com",
+      password: "DemoPassword123",
+      redirect: false
+    });
+
+    if (result?.error) {
+      setError("Demo login failed. Please try again.");
+      setLoading(false);
+      return;
+    }
 
     router.push("/dashboard");
     router.refresh();
@@ -68,6 +87,23 @@ export default function LoginPage() {
             {loading ? "Signing in..." : "Sign in"}
           </button>
         </form>
+
+        <div className="relative my-4">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-navy-border" />
+          </div>
+          <div className="relative flex justify-center">
+            <span className="bg-navy-surface px-3 text-xs text-text-muted">or</span>
+          </div>
+        </div>
+
+        <button
+          className="w-full border border-navy-border hover:bg-navy-elevated text-text-secondary hover:text-text-primary font-medium py-2 rounded-lg text-sm transition-colors disabled:opacity-50"
+          disabled={loading}
+          onClick={handleDemo}
+        >
+          Try demo account
+        </button>
 
         <p className="text-sm text-text-secondary mt-6 text-center">
           No account?{" "}
