@@ -95,19 +95,30 @@ export default function JobsClient({ jobs }: Props) {
       </div>
 
       <div className="flex gap-2 mb-6 flex-wrap">
-        {filteredOptions.map(f => (
-          <button
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-              filter === f
-                ? "bg-amber-accent text-navy-base"
-                : "bg-navy-elevated border border-navy-border text-text-secondary hover:text-text-primary"
-            }`}
-            key={f}
-            onClick={() => setFilter(f)}
-          >
-            {f === "ALL" ? "All" : f.charAt(0) + f.slice(1).toLowerCase()}
-          </button>
-        ))}
+        {filteredOptions.map(f => {
+          const count = f === "ALL" ? jobs.length : jobs.filter(j => j.status === f).length;
+
+          return (
+            <button
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                filter === f
+                  ? "bg-amber-accent text-navy-base"
+                  : "bg-navy-elevated border border-navy-border text-text-secondary hover:text-text-primary"
+              }`}
+              key={f}
+              onClick={() => setFilter(f)}
+            >
+              {f === "ALL" ? "All" : f.charAt(0) + f.slice(1).toLowerCase()}
+              <span
+                className={`ml-1.5 px-1.5 py-0.5 rounded-full text-xs ${
+                  filter === f ? "bg-navy-base/20 text-navy-base" : "bg-navy-border text-text-muted"
+                }`}
+              >
+                {count}
+              </span>
+            </button>
+          );
+        })}
       </div>
 
       {filtered.length === 0 ? (
