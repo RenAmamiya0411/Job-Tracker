@@ -5,6 +5,7 @@
     "skipLibCheck": true,
     "strict": false,
     "noEmit": true,
+    "allowArbitraryExtensions": true,
     "incremental": true,
     "module": "esnext",
     "esModuleInterop": true,
