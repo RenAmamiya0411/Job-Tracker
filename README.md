@@ -1,4 +1,4 @@
-# Job Tracker
+# Job Tracker ![In Progress](https://img.shields.io/badge/v1.1%20upgrade-in%20progress-blue)
 
 A full-stack job application tracker built to help developers manage their job search. Track applications, monitor status changes, and leverage AI tools to generate cover letters, improve resume bullets, and prepare for interviews.
 
