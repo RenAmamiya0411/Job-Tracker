@@ -2,7 +2,7 @@
 
 A full-stack job application tracker built to help developers manage their job search. Track applications, monitor status changes, and leverage AI tools to generate cover letters, improve resume bullets, and prepare for interviews.
 
-**Live Demo:** [your-vercel-url.vercel.app](https://your-vercel-url.vercel.app)
+**Live Demo:** [https://job-tracker-srhfalcon.vercel.app/](https://job-tracker-srhfalcon.vercel.app/)
 
 **Demo Account:**
 | Role | Email | Password |
