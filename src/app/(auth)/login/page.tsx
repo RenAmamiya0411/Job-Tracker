@@ -54,13 +54,16 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-navy-base">
-      <div className="w-full max-w-md bg-navy-surface rounded-xl shadow p-8">
+      <main className="w-full max-w-md bg-navy-surface rounded-xl shadow p-8">
         <h1 className="text-2xl font-semibold text-text-primary mb-6">Welcome Back</h1>
         <p className="text-text-secondary text-sm mb-6">Sign in to your account</p>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
-            <label className="block text-sm font-medium text-text-secondary mb-1">Email</label>
+            <label htmlFor="email" className="block text-sm font-medium text-text-secondary mb-1">
+              Email
+            </label>
             <input
+              id="email"
               className="w-full border border-navy-border text-text-primary rounded-lg px-3 py-2 text-sm outline-none  focus:border-amber-accent bg-navy-elevated"
               type="email"
               name="email"
@@ -68,8 +71,11 @@ export default function LoginPage() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-text-secondary mb-1">Password</label>
+            <label htmlFor="password" className="block text-sm font-medium text-text-secondary mb-1">
+              Password
+            </label>
             <input
+              id="password"
               className="w-full border border-navy-border text-text-primary rounded-lg px-3 py-2 text-sm outline-none  focus:border-amber-accent bg-navy-elevated"
               type="password"
               name="password"
@@ -107,11 +113,11 @@ export default function LoginPage() {
 
         <p className="text-sm text-text-secondary mt-6 text-center">
           No account?{" "}
-          <Link className="text-amber-accent hover:underline" href="/register">
+          <Link className="text-amber-accent underline underline-offset-2" href="/register">
             Register
           </Link>
         </p>
-      </div>
+      </main>
     </div>
   );
 }
