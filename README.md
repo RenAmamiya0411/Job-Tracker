@@ -144,3 +144,17 @@ src/
 ## Deployment
 
 Deployed on [Vercel](https://vercel.com). Database hosted on [Neon](https://neon.tech).
+
+### Accessibility Improvements (v1.1)
+
+**Baseline:** Lighthouse audits across Login, Dashboard, and Jobs List pages showed Performance, Best Practices, and SEO already at 100/100/100. Accessibility scored 84, 96, and 88 respectively — the one category with real room to improve.
+
+**Issues found and fixed:**
+
+- **Unlabeled form controls** — `<label>`/`<input>` pairs on the login page weren't programmatically linked, and `<select>` elements on the Jobs List had no accessible name. Fixed with proper `htmlFor`/`id` associations and `aria-label`s.
+- **Contrast failure** — the `text-muted` token (`#3d5068` on `#0f1923`) rendered at ~2.15:1, well below the 4.5:1 minimum. Updated to `#7188a3` (~4.9:1), a single CSS variable change that fixed the issue everywhere the token was used, including Dashboard.
+- **Heading order skip** — Jobs List jumped from `<h1>` to `<h3>` with no `<h2>` in between. Job card titles were changed to `<h2>` to restore a logical outline.
+- **Missing landmark** — the login page had no `<main>` element wrapping its primary content.
+- **Links relying on color alone** — link underlines were hover-only, so link text was distinguishable from body text by color alone at rest. Made underlines persistent instead of hover-triggered. (A separate audit flag on link contrast turned out to be a false alarm — the amber link color measured ~8.3:1, well above threshold.)
+
+**Result:** Accessibility now scores 100/100/100 across all three pages, with all four Lighthouse categories fully passing.
